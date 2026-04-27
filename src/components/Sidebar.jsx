@@ -10,15 +10,15 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="border-stone-200 bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:w-72 lg:border-r">
+    <aside className="border-slate-200 bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:w-72 lg:border-r">
       <div className="flex h-full flex-col">
-        <div className="flex h-20 items-center gap-3 border-b border-stone-200 px-5">
+        <div className="flex h-20 items-center gap-3 border-b border-slate-200 px-5">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-emerald-600 text-white">
             <Car size={24} aria-hidden="true" />
           </div>
           <div>
-            <p className="text-lg font-bold text-stone-950">DriveGestor</p>
-            <p className="text-sm text-stone-500">Aluguel de veículos</p>
+            <p className="text-lg font-bold text-slate-950">DriveGestor</p>
+            <p className="text-sm text-slate-500">Aluguel de veículos</p>
           </div>
         </div>
 
@@ -36,7 +36,7 @@ export default function Sidebar() {
                     'inline-flex min-h-11 shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition',
                     isActive
                       ? 'bg-emerald-50 text-emerald-700'
-                      : 'text-stone-600 hover:bg-stone-100 hover:text-stone-950',
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950',
                   ].join(' ')
                 }
               >

@@ -2,7 +2,7 @@
 
 MVP frontend para gestao de aluguel de carros, criado para autonomos controlarem clientes, frota e pagamentos de forma simples e responsiva.
 
-O projeto foi construido com React, Vite, Tailwind CSS, React Router DOM, React Hook Form, Zod, Lucide React e Supabase client configurado para uso futuro em services.
+O projeto foi construido com React, Vite, Tailwind CSS, React Router DOM, React Hook Form, Zod, Lucide React e Supabase.
 
 ## Funcionalidades
 
@@ -13,7 +13,7 @@ O projeto foi construido com React, Vite, Tailwind CSS, React Router DOM, React 
 - Cadastro, listagem, exclusao e filtro de pagamentos.
 - Acao para marcar pagamento pendente como pago.
 - Badges visuais para status dos pagamentos: Pago e Pendente.
-- Persistencia local dos dados via `localStorage`.
+- Persistencia dos dados no Supabase via services.
 - Layout responsivo estilo SaaS com sidebar, header, cards, formularios e tabelas.
 
 ## Tecnologias
@@ -26,7 +26,6 @@ O projeto foi construido com React, Vite, Tailwind CSS, React Router DOM, React 
 - Zod
 - Lucide React
 - Supabase JS
-- localStorage
 
 ## Requisitos
 
@@ -56,7 +55,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=sua_chave_publishable_ou_anon
 
 Nao coloque chaves secretas, `service_role` ou credenciais privadas no frontend.
 
-No momento, o app ainda usa `localStorage` para os dados do MVP. O client do Supabase esta pronto para ser importado em services futuros:
+O acesso ao banco fica centralizado em `src/services/`, usando o client do Supabase:
 
 ```js
 import { supabase } from '../lib/supabase';
@@ -116,7 +115,9 @@ src/
 │   ├── Header.jsx
 │   ├── CardDashboard.jsx
 │   ├── StatusBadge.jsx
-│   └── EmptyState.jsx
+│   ├── EmptyState.jsx
+│   ├── Loading.jsx
+│   └── ErrorMessage.jsx
 │
 ├── lib/
 │   └── supabase.js
@@ -130,31 +131,49 @@ src/
 ├── routes/
 │   └── AppRoutes.jsx
 │
-├── utils/
-│   └── storage.js
+├── services/
+│   ├── clientesService.js
+│   ├── carrosService.js
+│   ├── pagamentosService.js
+│   ├── dashboardService.js
+│   └── index.js
 │
 ├── App.jsx
 ├── main.jsx
 └── index.css
 ```
 
-## Como os dados sao salvos
+## Banco de dados
 
-Neste MVP, clientes, carros e pagamentos sao persistidos no navegador com `localStorage`.
+Clientes, carros e pagamentos sao persistidos no Supabase.
 
-As funcoes reutilizaveis ficam em:
+As funcoes reutilizaveis de acesso ao banco ficam em:
 
 ```txt
-src/utils/storage.js
+src/services/
 ```
 
 Elas permitem:
 
 - listar registros;
-- salvar colecoes;
+- buscar registros por id;
 - adicionar registros;
 - atualizar registros;
 - excluir registros.
+
+As migrations do banco ficam em:
+
+```txt
+supabase/migrations/
+```
+
+Para aplicar as migrations no projeto remoto:
+
+```bash
+npx supabase login
+npx supabase link --project-ref SEU_PROJECT_REF
+npx supabase db push
+```
 
 ## Scripts disponiveis
 
@@ -198,6 +217,5 @@ Configure tambem as variaveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_K
 
 - Nao existe backend neste momento.
 - Nao existe autenticacao implementada ainda.
-- Nao existe banco de dados sendo usado pelas telas atuais.
-- O Supabase esta apenas configurado como client para proximas etapas.
+- As telas atuais usam Supabase como fonte principal de dados.
 - O app foi pensado como MVP de portfolio, com visual limpo e organizacao simples para evolucao futura.

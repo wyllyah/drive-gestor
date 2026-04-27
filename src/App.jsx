@@ -1,17 +1,18 @@
-import Header from './components/Header.jsx';
-import Sidebar from './components/Sidebar.jsx';
 import AppRoutes from './routes/AppRoutes.jsx';
+import { useLocation } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout.jsx';
 
 export default function App() {
+  const { pathname } = useLocation();
+  const isAuthPage = pathname === '/login' || pathname === '/cadastro';
+
+  if (isAuthPage) {
+    return <AppRoutes />;
+  }
+
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-950">
-      <Sidebar />
-      <div className="min-h-screen lg:pl-72">
-        <Header />
-        <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <AppRoutes />
-        </main>
-      </div>
-    </div>
+    <AppLayout>
+      <AppRoutes />
+    </AppLayout>
   );
 }
